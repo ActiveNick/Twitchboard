@@ -5,9 +5,187 @@
     xmlns:local="using:Twitchboard"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:twitter="using:Microsoft.Toolkit.Uwp.Services.Twitter"
+    RequestedTheme="Dark"
+    mc:Ignorable="d" Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <DataTemplate x:Key="HamburgerMenuItem"
+                  x:DataType="controls:HamburgerMenuGlyphItem">
+            <Grid Width="240"
+            Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <FontIcon Grid.Column="0"
+                  Margin="12,12,11,12"
+                  FontFamily="Segoe MDL2 Assets"
+                  Foreground="White"
+                  Glyph="{Binding Glyph}" />
+                <TextBlock Grid.Column="1"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   Foreground="White"
+                   Text="{x:Bind Label}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="HamburgerMenuImageItem"
+                  x:DataType="controls:HamburgerMenuGlyphItem">
+            <Grid Width="240"
+            Height="48">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="48" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Image Margin="12,12,11,12"
+               Source="{Binding Glyph}"
+               Stretch="UniformToFill" />
+                <TextBlock Grid.Column="1"
+                   VerticalAlignment="Center"
+                   FontSize="16"
+                   Foreground="White"
+                   Text="{x:Bind Label}" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="TwitterSchemaTemplate"
+                  x:DataType="twitter:Tweet">
+            <Border Margin="12,0,12,12"
+              Padding="12"
+              Background="Black"
+              BorderBrush="#FFCCCCCC"
+              BorderThickness="1"
+              CornerRadius="4">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.RowSpan="2"
+                   Width="50"
+                   Height="50"
+                   Margin="0,0,12,0"
+                   VerticalAlignment="Top"
+                   Source="{Binding User.ProfileImageUrl}"
+                   Stretch="Uniform" />
+                        <TextBlock Grid.Column="1"
+                       FontWeight="SemiBold"
+                       Text="{x:Bind User.Name}" />
+                        <TextBlock Grid.Row="1"
+                       Grid.Column="1"
+                       VerticalAlignment="Top"
+                       FontWeight="Light"
+                       Text="{x:Bind User.ScreenName}" />
+                        <Image Grid.RowSpan="2"
+                   Grid.Column="2"
+                   Width="24"
+                   Height="24"
+                   VerticalAlignment="Top"
+                   Source="/SamplePages/Twitter Service/TwitterLogo.png"
+                   Stretch="Uniform" />
+                    </Grid>
+                    <TextBlock Grid.Row="1"
+                     FontWeight="SemiBold"
+                     Text="{x:Bind Text}"
+                     TextTrimming="CharacterEllipsis"
+                     TextWrapping="WrapWholeWords" />
+                    <TextBlock Grid.Row="2"
+                     HorizontalAlignment="Right"
+                     FontWeight="ExtraLight"
+                     Text="{x:Bind CreationDate}" />
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <controls:HamburgerMenu x:Name="HamburgerMenuControl"
+                            CompactPaneLength="{Binding CompactPaneLength.Value}"
+                            DisplayMode="{Binding DisplayMode.Value}"
+                            Foreground="White"
+                            HamburgerHeight="{Binding HamburgerHeight.Value}"
+                            HamburgerWidth="48"
+                            IsPaneOpen="{Binding IsPaneOpen.Value, Mode=TwoWay}"
+                            ItemClick="HamburgerMenu_OnItemClick"
+                            ItemTemplate="{StaticResource HamburgerMenuImageItem}"
+                            OpenPaneLength="{Binding OpenPaneLength.Value}"
+                            OptionsItemClick="HamburgerMenu_OnOptionsItemClick"
+                            OptionsItemTemplate="{StaticResource HamburgerMenuItem}"
+                            PaneBackground="{Binding PaneBackground.Value}">
+            <!--  Items  -->
+            <controls:HamburgerMenu.ItemsSource>
+                <controls:HamburgerMenuItemCollection>
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Icons/Home.png"
+                                           Label="Home" />
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Icons/Notification.png"
+                                           Label="Notifications" />
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Icons/Profile.png"
+                                           Label="Profile" />
+                    <controls:HamburgerMenuGlyphItem Glyph="/Assets/Icons/Search.png"
+                                           Label="Search" />
+                </controls:HamburgerMenuItemCollection>
+            </controls:HamburgerMenu.ItemsSource>
 
+            <!--  Options  -->
+            <controls:HamburgerMenu.OptionsItemsSource>
+                <controls:HamburgerMenuItemCollection>
+                    <controls:HamburgerMenuGlyphItem Glyph=""
+                                           Label="About" />
+                </controls:HamburgerMenuItemCollection>
+            </controls:HamburgerMenu.OptionsItemsSource>
+
+            <!--  Content  -->
+            <Grid x:Name="ContentGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="48" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0"
+                Background="Black">
+                    <TextBlock x:Name="Header"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center"
+                     FontSize="24"
+                     Foreground="White"
+                     Text="{Binding Label}" />
+                </Border>
+                <!--<Image x:Name="Image"
+               Grid.Row="1"
+               Source="{Binding Glyph}" />-->
+                <ListView x:Name="lstTweets"
+                    Grid.Row="1"
+                    Margin="0,12,0,0"
+                    IsItemClickEnabled="False"
+                    ItemTemplate="{StaticResource TwitterSchemaTemplate}"
+                    SelectionMode="None">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <ListViewItemPresenter PointerOverBackground="{x:Null}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
+        </controls:HamburgerMenu>
     </Grid>
 </Page>
