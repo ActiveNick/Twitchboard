@@ -26,8 +26,8 @@ namespace Twitchboard
     {
         // TO DO: IMPORTANT - These are my Twitter keys and I may change them when I feel like it (I may have already).
         // Go get your own at http://dev.twitter.com.
-        string twConsumerKey = "d8zOFA676xPQcvo0tkxfFuNIC";
-        string twConsumerSecret = "zsVLyILEgYRGaAUXapaEyPT0QQeiLAFsbj7vBPGiTStIEKtgdM";
+        string twConsumerKey = "{INSERT YOUR KEY HERE}";
+        string twConsumerSecret = "{INSERT YOUR SECRET HERE}";
         string twCallbackUri = "http://ageofmobility.com";  // Dummy callback url because I'm not really using it
 
         public MainPage()
@@ -65,6 +65,8 @@ namespace Twitchboard
                 }
             }
 
+            // Temprorarily fetching the HoloLens user timeline just to test formatting with two columns
+            lstTimeline.ItemsSource = await TwitterService.Instance.GetUserTimeLineAsync("HoloLens", 50);
             lstTweets.ItemsSource = await TwitterService.Instance.GetUserTimeLineAsync(user.ScreenName, 50);
         }
 
