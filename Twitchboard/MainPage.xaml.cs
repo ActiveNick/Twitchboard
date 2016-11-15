@@ -20,15 +20,10 @@ using Windows.UI.Popups;
 namespace Twitchboard
 {
     /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
+    /// 
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        // TO DO: IMPORTANT - These are my Twitter keys and I may change them when I feel like it (I may have already).
-        // Go get your own at http://dev.twitter.com.
-        string twConsumerKey = "{INSERT YOUR KEY HERE}";
-        string twConsumerSecret = "{INSERT YOUR SECRET HERE}";
-        string twCallbackUri = "http://ageofmobility.com";  // Dummy callback url because I'm not really using it
 
         public MainPage()
         {
@@ -37,7 +32,13 @@ namespace Twitchboard
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            TwitterService.Instance.Initialize(twConsumerKey, twConsumerSecret, twCallbackUri);
+            if (!ConfigSecrets.ISTWITTERCONFIGDONE)
+            {
+                await new MessageDialog("You forgot to initialize your own Twitter app settings. See the comments in the ConfigSecrets.cs file for details.").ShowAsync();
+                return;
+            }
+
+            TwitterService.Instance.Initialize(ConfigSecrets.TwitterConsumerKey, ConfigSecrets.TwitterConsumerSecret, ConfigSecrets.TwitterCallbackUri);
 
             if (!await TwitterService.Instance.LoginAsync())
             {
