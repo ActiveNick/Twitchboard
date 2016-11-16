@@ -74,7 +74,11 @@ namespace Twitchboard
             // Fetches the status timeline of the user (i.e. what the user tweeted)
             lstTweets.ItemsSource = await TwitterService.Instance.GetUserTimeLineAsync(user.ScreenName, 50);
 
-            lstQuery.ItemsSource = await TwitterService.Instance.SearchAsync("#HoloLens", 50);
+            // Fetches tweets for a specific query
+            // TO DO: Add the ability to change this hardcoded query from the UI
+            string query = "#HoloLens";
+            lblQuery.Text = "Query: " + query;
+            lstQuery.ItemsSource = await TwitterService.Instance.SearchAsync(query, 50);
         }
 
         private void HamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)
