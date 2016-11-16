@@ -153,6 +153,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <ListView x:Name="lstTimeline"
                     Grid.Column="0"
@@ -191,7 +192,27 @@
                             </Setter>
                         </Style>
                     </ListView.ItemContainerStyle>
-                </ListView>            </Grid>
+                </ListView>
+                <ListView x:Name="lstQuery"
+                    Grid.Column="2"
+                    Margin="0,12,0,0"
+                    IsItemClickEnabled="False"
+                    ItemTemplate="{StaticResource TwitterSchemaTemplate}"
+                    SelectionMode="None">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListViewItem">
+                                        <ListViewItemPresenter PointerOverBackground="{x:Null}" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </Grid>
         </controls:HamburgerMenu>
     </Grid>
 </Page>
