@@ -66,8 +66,11 @@ namespace Twitchboard
                 }
             }
 
-            // Temprorarily fetching the HoloLens user timeline just to test formatting with two columns
-            lstTimeline.ItemsSource = await TwitterService.Instance.GetUserTimeLineAsync("HoloLens", 50);
+            // Fetches the home feed of the user (i.e. what the user's followers tweeted)
+            TwitterDataConfig tc = new TwitterDataConfig();
+            tc.QueryType = TwitterQueryType.Home;
+            lstTimeline.ItemsSource = await TwitterService.Instance.RequestAsync(tc, 50);
+            // Fetches the status timeline of the user (i.e. what the user tweeted)
             lstTweets.ItemsSource = await TwitterService.Instance.GetUserTimeLineAsync(user.ScreenName, 50);
         }
 
