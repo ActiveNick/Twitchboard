@@ -15,12 +15,11 @@ using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Uwp.Services.Twitter;
 using Windows.UI.Popups;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
+// Social connection dashboard app for Windows 10
 namespace Twitchboard
 {
     /// <summary>
-    /// 
+    /// Main application page used to navigate various social feeds
     /// </summary>
     public sealed partial class MainPage : Page
     {
@@ -32,14 +31,16 @@ namespace Twitchboard
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            // This is just to give you a warning in case you got the code on GitHub and just ran it without
+            // configuring your Twitter settings.
             if (!ConfigSecrets.ISTWITTERCONFIGDONE)
             {
                 await new MessageDialog("You forgot to initialize your own Twitter app settings. See the comments in the ConfigSecrets.cs file for details.").ShowAsync();
                 return;
             }
 
+            // Twitter initialization & user login
             TwitterService.Instance.Initialize(ConfigSecrets.TwitterConsumerKey, ConfigSecrets.TwitterConsumerSecret, ConfigSecrets.TwitterCallbackUri);
-
             if (!await TwitterService.Instance.LoginAsync())
             {
                 var error = new MessageDialog("Unable to log to Twitter");
@@ -47,6 +48,7 @@ namespace Twitchboard
                 return;
             }
 
+            // Retrieve the Twitter user settings
             TwitterUser user;
             try
             {
@@ -83,12 +85,12 @@ namespace Twitchboard
 
         private void HamburgerMenu_OnItemClick(object sender, ItemClickEventArgs e)
         {
-
+            // Not implemented yet
         }
 
         private void HamburgerMenu_OnOptionsItemClick(object sender, ItemClickEventArgs e)
         {
-
+            // Not implemented yet
         }
     }
 }
