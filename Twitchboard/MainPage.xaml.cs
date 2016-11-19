@@ -92,5 +92,21 @@ namespace Twitchboard
         {
             // Not implemented yet
         }
+
+        private async void btnTweet_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Post a tweet
+                await TwitterService.Instance.TweetStatusAsync(txtTweet.Text);
+
+                txtTweet.Text = "";
+            }
+            catch (Exception ex)
+            {
+                // TO DO: Log the exception
+                await new MessageDialog("Oops! Something went wrong when we tried to post your new tweet.").ShowAsync();
+            }
+        }
     }
 }

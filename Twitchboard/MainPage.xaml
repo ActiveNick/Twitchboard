@@ -153,6 +153,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
@@ -228,6 +229,17 @@
                         </Style>
                     </ListView.ItemContainerStyle>
                 </ListView>
+
+                <!--  Textbox for Tweeting  -->
+                <Grid x:Name="TweetGrid" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Margin="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox x:Name="txtTweet" Grid.Column="0" Margin="12" MaxLength="140" PlaceholderText="Wanna tell the world something? Type it here and click the 'Send' button..."/>
+                    <Button x:Name="btnTweet" Grid.Column="1" Content="Send" Width="150" Margin="12" Click="btnTweet_Click" />
+                </Grid>
             </Grid>
         </controls:HamburgerMenu>
     </Grid>
