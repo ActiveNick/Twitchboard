@@ -168,14 +168,18 @@
                            Margin="12, 12, 0, 0" 
                            Style="{ThemeResource TitleTextBlockStyle}" 
                            Tapped="lblHome_Tapped" />
-                <ListView x:Name="lstHome"
+                <controls:PullToRefreshListView  x:Name="lstHome"
                     Grid.Row="1"
                     Grid.Column="0"
                     Margin="0,12,0,0"
                     IsItemClickEnabled="False"
                     ItemTemplate="{StaticResource TwitterSchemaTemplate}"
-                    SelectionMode="None">
-                    <ListView.ItemContainerStyle>
+                    SelectionMode="None"
+                    IsPullToRefreshWithMouseEnabled="true"
+                    OverscrollLimit="0.4"
+	                PullThreshold="100"
+	                RefreshRequested="lstHome_RefreshRequested">
+                    <controls:PullToRefreshListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             <Setter Property="Template">
@@ -186,8 +190,13 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
+                    </controls:PullToRefreshListView.ItemContainerStyle>
+                    <controls:PullToRefreshListView.PullToRefreshContent>
+                        <TextBlock FontSize="16"
+                                   Opacity="0.5"
+                                   Text="Pull down to refresh data" />
+                    </controls:PullToRefreshListView.PullToRefreshContent>
+                </controls:PullToRefreshListView>
 
                 <!--  My Timeline  -->
                 <TextBlock x:Name="lblTimeline" 
@@ -197,14 +206,18 @@
                            Margin="12, 12, 0, 0"  
                            Style="{ThemeResource TitleTextBlockStyle}"
                            Tapped="lblTimeline_Tapped"/>
-                <ListView x:Name="lstTimeline"
+                <controls:PullToRefreshListView x:Name="lstTimeline"
                     Grid.Row="1"
                     Grid.Column="1"
                     Margin="0,12,0,0"
                     IsItemClickEnabled="False"
                     ItemTemplate="{StaticResource TwitterSchemaTemplate}"
-                    SelectionMode="None">
-                    <ListView.ItemContainerStyle>
+                    SelectionMode="None"
+                    IsPullToRefreshWithMouseEnabled="true"
+                    OverscrollLimit="0.4"
+	                PullThreshold="100"
+	                RefreshRequested="lstTimeline_RefreshRequested">
+                    <controls:PullToRefreshListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             <Setter Property="Template">
@@ -215,8 +228,13 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
+                    </controls:PullToRefreshListView.ItemContainerStyle>
+                    <controls:PullToRefreshListView.PullToRefreshContent>
+                        <TextBlock FontSize="16"
+                                   Opacity="0.5"
+                                   Text="Pull down to refresh data" />
+                    </controls:PullToRefreshListView.PullToRefreshContent>
+                </controls:PullToRefreshListView>
 
                 <!--  Custom Query  -->
                 <TextBlock x:Name="lblQuery" 
@@ -226,14 +244,18 @@
                            Margin="12, 12, 0, 0" 
                            Style="{ThemeResource TitleTextBlockStyle}"
                            Tapped="lblQuery_Tapped"/>
-                <ListView x:Name="lstQuery"
+                <controls:PullToRefreshListView x:Name="lstQuery"
                     Grid.Row="1"
                     Grid.Column="2"
                     Margin="0,12,0,0"
                     IsItemClickEnabled="False"
                     ItemTemplate="{StaticResource TwitterSchemaTemplate}"
-                    SelectionMode="None">
-                    <ListView.ItemContainerStyle>
+                    SelectionMode="None"
+                    IsPullToRefreshWithMouseEnabled="true"
+                    OverscrollLimit="0.4"
+	                PullThreshold="100"
+                    RefreshRequested="lstQuery_RefreshRequested">
+                    <controls:PullToRefreshListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                             <Setter Property="Template">
@@ -244,8 +266,13 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-                    </ListView.ItemContainerStyle>
-                </ListView>
+                    </controls:PullToRefreshListView.ItemContainerStyle>
+                    <controls:PullToRefreshListView.PullToRefreshContent>
+                        <TextBlock FontSize="16"
+                                   Opacity="0.5"
+                                   Text="Pull down to refresh data" />
+                    </controls:PullToRefreshListView.PullToRefreshContent>
+                </controls:PullToRefreshListView>
 
                 <!--  Textbox for Tweeting  -->
                 <Grid x:Name="TweetGrid" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Margin="12">

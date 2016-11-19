@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Uwp.Services.Twitter;
 using Windows.UI.Popups;
+using System.Threading.Tasks;
 
 // Social connection dashboard app for Windows 10
 namespace Twitchboard
@@ -23,6 +24,7 @@ namespace Twitchboard
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        TwitterUser user;
 
         public MainPage()
         {
@@ -49,7 +51,6 @@ namespace Twitchboard
             }
 
             // Retrieve the Twitter user settings
-            TwitterUser user;
             try
             {
                 user = await TwitterService.Instance.GetUserAsync();
@@ -68,14 +69,27 @@ namespace Twitchboard
                 }
             }
 
+            // We won't await this to get the results faster in parallel
+            PullHomeFeed();
+            PullUserTimeline(user);
+            PullQueryResults();
+        }
+
+        private async Task PullHomeFeed()
+        {
             // Fetches the home feed of the user (i.e. what the user's followers tweeted)
             TwitterDataConfig tc = new TwitterDataConfig();
             tc.QueryType = TwitterQueryType.Home;
             lstHome.ItemsSource = await TwitterService.Instance.RequestAsync(tc, 50);
-
+        }
+        private async Task PullUserTimeline(TwitterUser user)
+        {
             // Fetches the status timeline of the user (i.e. what the user tweeted)
             lstTimeline.ItemsSource = await TwitterService.Instance.GetUserTimeLineAsync(user.ScreenName, 50);
+        }
 
+        private async Task PullQueryResults()
+        {
             // Fetches tweets for a specific query
             // TO DO: Add the ability to change this hardcoded query from the UI
             string query = "#HoloLens";
@@ -101,6 +115,9 @@ namespace Twitchboard
                 await TwitterService.Instance.TweetStatusAsync(txtTweet.Text);
 
                 txtTweet.Text = "";
+                // Refresh the users's timeline and home feeds every time they tweet
+                PullHomeFeed();
+                PullUserTimeline(user);
             }
             catch (Exception ex)
             {
@@ -125,6 +142,21 @@ namespace Twitchboard
         private void lblQuery_Tapped(object sender, TappedRoutedEventArgs e)
         {
             lstQuery.ScrollIntoView(lstQuery.Items[0], ScrollIntoViewAlignment.Default);
+        }
+
+        private void lstHome_RefreshRequested(object sender, EventArgs e)
+        {
+            PullHomeFeed();
+        }
+
+        private void lstTimeline_RefreshRequested(object sender, EventArgs e)
+        {
+            PullUserTimeline(user);
+        }
+
+        private void lstQuery_RefreshRequested(object sender, EventArgs e)
+        {
+            PullQueryResults();
         }
     }
 }
