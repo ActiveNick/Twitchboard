@@ -56,9 +56,8 @@
             <Border Margin="12,0,12,12"
               Padding="12"
               Background="Black"
-              BorderBrush="#FFCCCCCC"
-              BorderThickness="1"
-              CornerRadius="4">
+              BorderBrush="DarkGray"
+              BorderThickness="0,0,0,0.5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -99,11 +98,11 @@
                    Stretch="Uniform" />
                     </Grid>
                     <TextBlock Grid.Row="1"
-                     FontWeight="SemiBold"
+                     FontWeight="Light"
                      Text="{x:Bind Text}"
                      TextTrimming="CharacterEllipsis"
                      TextWrapping="WrapWholeWords" />
-                    <TextBlock Grid.Row="2"
+                    <TextBlock Grid.Row="0"
                      HorizontalAlignment="Right"
                      FontWeight="ExtraLight"
                      Text="{x:Bind CreationDate}" />
