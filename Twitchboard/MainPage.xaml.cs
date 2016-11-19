@@ -71,10 +71,10 @@ namespace Twitchboard
             // Fetches the home feed of the user (i.e. what the user's followers tweeted)
             TwitterDataConfig tc = new TwitterDataConfig();
             tc.QueryType = TwitterQueryType.Home;
-            lstTimeline.ItemsSource = await TwitterService.Instance.RequestAsync(tc, 50);
+            lstHome.ItemsSource = await TwitterService.Instance.RequestAsync(tc, 50);
 
             // Fetches the status timeline of the user (i.e. what the user tweeted)
-            lstTweets.ItemsSource = await TwitterService.Instance.GetUserTimeLineAsync(user.ScreenName, 50);
+            lstTimeline.ItemsSource = await TwitterService.Instance.GetUserTimeLineAsync(user.ScreenName, 50);
 
             // Fetches tweets for a specific query
             // TO DO: Add the ability to change this hardcoded query from the UI
@@ -107,6 +107,24 @@ namespace Twitchboard
                 // TO DO: Log the exception
                 await new MessageDialog("Oops! Something went wrong when we tried to post your new tweet.").ShowAsync();
             }
+        }
+
+        // When the user taps a list header, that lists scrolls back to the top
+        private void lblHome_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            lstHome.ScrollIntoView(lstHome.Items[0], ScrollIntoViewAlignment.Default);
+        }
+
+        // When the user taps a list header, that lists scrolls back to the top
+        private void lblTimeline_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            lstTimeline.ScrollIntoView(lstTimeline.Items[0], ScrollIntoViewAlignment.Default);
+        }
+
+        // When the user taps a list header, that lists scrolls back to the top
+        private void lblQuery_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            lstQuery.ScrollIntoView(lstQuery.Items[0], ScrollIntoViewAlignment.Default);
         }
     }
 }
