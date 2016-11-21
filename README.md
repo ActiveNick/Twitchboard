@@ -2,7 +2,9 @@
 Social connection dashboard app for Windows 10 centered around Twitter. The name is a derivative of "Twitter Switchboard".
 
 ## Features
-* Show 3 Twitter feeds in 3 respective columns: My Home Feed, My Timeline, Custom Query
+* Show three Twitter feeds in three respective columns: My Home Feed, My Timeline, Custom Query (currently hardcoded)
+* Send a tweet
+* Slidable menu appears when swiping a tweet left (Reply) or right (Favorite, not implemented yet).
 * Hamburger Menu (currently not hooked to any features)
 
 ## Implementation Notes
