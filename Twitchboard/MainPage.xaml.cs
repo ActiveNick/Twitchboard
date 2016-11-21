@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using Microsoft.Toolkit.Uwp.Services.Twitter;
 using Windows.UI.Popups;
 using System.Threading.Tasks;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 
 // Social connection dashboard app for Windows 10
 namespace Twitchboard
@@ -157,6 +158,25 @@ namespace Twitchboard
         private void lstQuery_RefreshRequested(object sender, EventArgs e)
         {
             PullQueryResults();
+        }
+
+        // Favorite
+        private void SlidableListItem_LeftCommandRequested(object sender, EventArgs e)
+        {
+            Tweet tw = (Tweet)((SlidableListItem)sender).DataContext;
+
+            // TO DO: Favorite the selected tweet
+        }
+
+        // Reply
+        private void SlidableListItem_RightCommandRequested(object sender, EventArgs e)
+        {
+            // Get the selected tweet
+            Tweet tw = (Tweet)((SlidableListItem)sender).DataContext;
+
+            // Get the name of the user who posted this tweet and add it to the current tweet text
+            txtTweet.Text += $"@{tw.User.ScreenName} ";
+            txtTweet.Focus(FocusState.Programmatic);
         }
     }
 }

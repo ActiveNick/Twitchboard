@@ -53,61 +53,73 @@
 
         <DataTemplate x:Key="TwitterSchemaTemplate"
                   x:DataType="twitter:Tweet">
-            <Border Margin="12,0,12,12"
-              Padding="12"
-              Background="Black"
-              BorderBrush="DarkGray"
-              BorderThickness="0,0,0,0.5">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+            <controls:SlidableListItem
+                IsLeftCommandEnabled="True"
+                LeftBackground="Green"
+                LeftLabel="Favorite"
+                LeftCommandRequested="SlidableListItem_LeftCommandRequested"
+                IsRightCommandEnabled="True"
+                RightBackground="Blue"
+                RightLabel="Reply"
+                RightIcon="MailReply"
+                RightCommandRequested="SlidableListItem_RightCommandRequested"
+                MouseSlidingEnabled="True">
+                <Border Margin="12,0,12,12"
+                  Padding="12"
+                  Background="Black"
+                  BorderBrush="DarkGray"
+                  BorderThickness="0,0,0,0.5">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
-                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Image Grid.RowSpan="2"
-                   Width="50"
-                   Height="50"
-                   Margin="0,0,12,0"
-                   VerticalAlignment="Top"
-                   Source="{Binding User.ProfileImageUrl}"
-                   Stretch="Uniform" />
-                        <TextBlock Grid.Column="1"
-                       FontWeight="SemiBold"
-                       Text="{x:Bind User.Name}" />
-                        <TextBlock Grid.Row="1"
-                       Grid.Column="1"
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.RowSpan="2"
+                       Width="50"
+                       Height="50"
+                       Margin="0,0,12,0"
                        VerticalAlignment="Top"
-                       FontWeight="Light"
-                       Text="{x:Bind User.ScreenName}" />
-                        <Image Grid.RowSpan="2"
-                   Grid.Column="2"
-                   Width="24"
-                   Height="24"
-                   VerticalAlignment="Top"
-                   Source="/SamplePages/Twitter Service/TwitterLogo.png"
-                   Stretch="Uniform" />
+                       Source="{Binding User.ProfileImageUrl}"
+                       Stretch="Uniform" />
+                            <TextBlock Grid.Column="1"
+                           FontWeight="SemiBold"
+                           Text="{x:Bind User.Name}" />
+                            <TextBlock Grid.Row="1"
+                           Grid.Column="1"
+                           VerticalAlignment="Top"
+                           FontWeight="Light"
+                           Text="{x:Bind User.ScreenName}" />
+                            <Image Grid.RowSpan="2"
+                       Grid.Column="2"
+                       Width="24"
+                       Height="24"
+                       VerticalAlignment="Top"
+                       Source="/SamplePages/Twitter Service/TwitterLogo.png"
+                       Stretch="Uniform" />
+                        </Grid>
+                        <TextBlock Grid.Row="1"
+                         FontWeight="Light"
+                         Text="{x:Bind Text}"
+                         TextTrimming="CharacterEllipsis"
+                         TextWrapping="WrapWholeWords" />
+                        <TextBlock Grid.Row="0"
+                         HorizontalAlignment="Right"
+                         FontWeight="ExtraLight"
+                         Text="{x:Bind CreationDate}" />
                     </Grid>
-                    <TextBlock Grid.Row="1"
-                     FontWeight="Light"
-                     Text="{x:Bind Text}"
-                     TextTrimming="CharacterEllipsis"
-                     TextWrapping="WrapWholeWords" />
-                    <TextBlock Grid.Row="0"
-                     HorizontalAlignment="Right"
-                     FontWeight="ExtraLight"
-                     Text="{x:Bind CreationDate}" />
-                </Grid>
-            </Border>
+                </Border>
+            </controls:SlidableListItem>
         </DataTemplate>
     </Page.Resources>
 
@@ -281,7 +293,12 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBox x:Name="txtTweet" Grid.Column="0" Margin="12" MaxLength="140" PlaceholderText="Wanna tell the world something? Type it here and click the 'Send' button..."/>
+                    <TextBox x:Name="txtTweet" 
+                             Grid.Column="0" 
+                             Margin="12" 
+                             MaxLength="140" 
+                             IsTabStop="True"
+                             PlaceholderText="Wanna tell the world something? Type it here and click the 'Send' button..."/>
                     <Button x:Name="btnTweet" Grid.Column="1" Content="Send" Width="150" Margin="12" Click="btnTweet_Click" />
                 </Grid>
             </Grid>
