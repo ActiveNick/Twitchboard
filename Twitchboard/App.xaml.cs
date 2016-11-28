@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.HockeyApp;
 
 namespace Twitchboard
 {
@@ -30,6 +31,9 @@ namespace Twitchboard
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            // TO DO: Replace with your own HockeyApp App ID in the ConfigSecrets class
+            Microsoft.HockeyApp.HockeyClient.Current.Configure(ConfigSecrets.HockeyAppID);
         }
 
         /// <summary>
