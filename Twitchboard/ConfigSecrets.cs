@@ -1,4 +1,4 @@
-﻿namespace Twitchboard
+namespace Twitchboard
 {
     /// <summary>
     /// This static class is used to store all the application keys and secret codes and
@@ -18,6 +18,9 @@
         public const string TwitterConsumerSecret = "{INSERT YOUR SECRET HERE}";
         public const string TwitterCallbackUri = "{INSERT YOUR TWITTER CALLBACK URI HERE - MUST MATCH YOUR TWITTER PORTAL APP SETTINGS";
 
+        // HockeyApp
+        public const string HockeyAppID = "{INSERT YOUR HOCKEYAPP APP ID HERE}";
+        
         // TO DO: Once you have configured the required Azure services, you can set the 
         // following bool constant to true
         public const bool ISAZURECONFIGDONE = false;
