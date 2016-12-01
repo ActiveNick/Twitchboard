@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.HockeyApp;
+using Microsoft.HockeyApp.DataContracts;
 
 namespace Twitchboard
 {
@@ -33,7 +34,11 @@ namespace Twitchboard
             this.Suspending += OnSuspending;
 
             // TO DO: Replace with your own HockeyApp App ID in the ConfigSecrets class
-            Microsoft.HockeyApp.HockeyClient.Current.Configure(ConfigSecrets.HockeyAppID);
+            // To get started with HockeyApp analytics in UWP apps, please read:
+            // https://hockeyapp.net/blog/2016/02/15/hockeysdk-for-uwp-apps.html
+            HockeyClient.Current.Configure(ConfigSecrets.HockeyAppID);
+
+            HockeyClient.Current.TrackEvent("AppStarted");
         }
 
         /// <summary>
@@ -90,6 +95,9 @@ namespace Twitchboard
         /// <param name="e">Details about the navigation failure</param>
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
+            //EventTelemetry et = new EventTelemetry();
+            
+            HockeyClient.Current.TrackEvent("NavigationFailed");
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 

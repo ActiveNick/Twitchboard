@@ -16,6 +16,7 @@ using Microsoft.Toolkit.Uwp.Services.Twitter;
 using Windows.UI.Popups;
 using System.Threading.Tasks;
 using Microsoft.Toolkit.Uwp.UI.Controls;
+using Microsoft.HockeyApp;
 
 // Social connection dashboard app for Windows 10
 namespace Twitchboard
@@ -119,11 +120,15 @@ namespace Twitchboard
                 // Refresh the users's timeline and home feeds every time they tweet
                 PullHomeFeed();
                 PullUserTimeline(user);
+
+                HockeyClient.Current.TrackEvent("PostTweet");
             }
             catch (Exception ex)
             {
                 // TO DO: Log the exception
                 await new MessageDialog("Oops! Something went wrong when we tried to post your new tweet.").ShowAsync();
+
+                HockeyClient.Current.TrackEvent("PostTweetError");
             }
         }
 
@@ -131,33 +136,45 @@ namespace Twitchboard
         private void lblHome_Tapped(object sender, TappedRoutedEventArgs e)
         {
             lstHome.ScrollIntoView(lstHome.Items[0], ScrollIntoViewAlignment.Default);
+
+            HockeyClient.Current.TrackEvent("HomeHeaderTapped");
         }
 
         // When the user taps a list header, that lists scrolls back to the top
         private void lblTimeline_Tapped(object sender, TappedRoutedEventArgs e)
         {
             lstTimeline.ScrollIntoView(lstTimeline.Items[0], ScrollIntoViewAlignment.Default);
+
+            HockeyClient.Current.TrackEvent("TimelineHeaderTapped");
         }
 
         // When the user taps a list header, that lists scrolls back to the top
         private void lblQuery_Tapped(object sender, TappedRoutedEventArgs e)
         {
             lstQuery.ScrollIntoView(lstQuery.Items[0], ScrollIntoViewAlignment.Default);
+
+            HockeyClient.Current.TrackEvent("QueryHeaderTapped");
         }
 
         private void lstHome_RefreshRequested(object sender, EventArgs e)
         {
             PullHomeFeed();
+
+            HockeyClient.Current.TrackEvent("PullHomeFeed");
         }
 
         private void lstTimeline_RefreshRequested(object sender, EventArgs e)
         {
             PullUserTimeline(user);
+
+            HockeyClient.Current.TrackEvent("PullUserTimeline");
         }
 
         private void lstQuery_RefreshRequested(object sender, EventArgs e)
         {
             PullQueryResults();
+
+            HockeyClient.Current.TrackEvent("PullQueryResults");
         }
 
         // Favorite
@@ -166,6 +183,8 @@ namespace Twitchboard
             Tweet tw = (Tweet)((SlidableListItem)sender).DataContext;
 
             // TO DO: Favorite the selected tweet
+
+            HockeyClient.Current.TrackEvent("SlideFavorited");
         }
 
         // Reply
@@ -177,6 +196,8 @@ namespace Twitchboard
             // Get the name of the user who posted this tweet and add it to the current tweet text
             txtTweet.Text += $"@{tw.User.ScreenName} ";
             txtTweet.Focus(FocusState.Programmatic);
+
+            HockeyClient.Current.TrackEvent("SlideReply");
         }
     }
 }
